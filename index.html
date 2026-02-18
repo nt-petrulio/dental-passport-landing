@@ -1,1034 +1,629 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dental Passport — Your Complete Dental History, Always With You</title>
-  <meta name="description" content="Store X-rays, photos, treatment notes and your complete dental history in one secure app. Never start from scratch at a new clinic again.">
+  <title>Dental Passport — Твій стоматологічний паспорт</title>
+  <meta name="description" content="Зберігай всю стоматологічну історію в одному місці. Зубна карта, процедури, нагадування — завжди під рукою.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #FAFAFA;
-      --white: #FFFFFF;
-      --dark: #0A0F1E;
-      --dark2: #111827;
-      --text: #111827;
-      --muted: #6B7280;
-      --light: #F3F4F6;
-      --border: #E5E7EB;
-      --blue: #2563EB;
-      --blue-light: #3B82F6;
-      --blue-dark: #1D4ED8;
-      --cyan: #06B6D4;
-      --green: #10B981;
-      --red: #EF4444;
+      --teal:    #00C4B4;
+      --teal-d:  #009E90;
+      --teal-l:  #E6FAF9;
+      --teal-ll: #F0FDFB;
+      --white:   #FFFFFF;
+      --bg:      #F7F8FA;
+      --text:    #0D1117;
+      --muted:   #6B7280;
+      --border:  #E5E7EB;
+      --card:    #FFFFFF;
+      --gray:    #F3F4F6;
+      --radius:  18px;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Inter', -apple-system, sans-serif;
-      background: var(--bg);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--white);
       color: var(--text);
       line-height: 1.6;
-      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    /* ─── NAV ─── */
+    /* ────────────────────────────────────────────
+       NAV
+    ──────────────────────────────────────────── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(255,255,255,0.9);
-      backdrop-filter: blur(20px);
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
+      height: 62px;
+      display: flex; align-items: center;
       padding: 0 24px;
-      height: 64px;
+    }
+    .nav-inner {
+      max-width: 1080px; width: 100%; margin: 0 auto;
       display: flex; align-items: center; justify-content: space-between;
     }
-    .nav-inner { max-width: 1100px; width: 100%; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
-    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
     .nav-logo-icon {
       width: 36px; height: 36px;
-      background: var(--blue);
+      background: var(--teal);
       border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
       font-size: 18px;
+      box-shadow: 0 2px 8px rgba(0,196,180,0.35);
     }
-    .nav-logo-text { font-size: 17px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
-    .nav-links { display: flex; align-items: center; gap: 32px; }
-    .nav-links a { text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 500; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--text); }
+    .nav-logo-text {
+      font-size: 16px; font-weight: 700; color: var(--text);
+      letter-spacing: -0.3px;
+    }
     .nav-cta {
-      background: var(--blue);
-      color: white !important;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-size: 14px !important;
-      font-weight: 600 !important;
+      background: var(--teal);
+      color: white;
+      padding: 9px 20px;
+      border-radius: 10px;
+      font-size: 14px; font-weight: 600;
       text-decoration: none;
-      transition: background 0.2s !important;
+      transition: background 0.2s, transform 0.15s;
+      white-space: nowrap;
     }
-    .nav-cta:hover { background: var(--blue-dark) !important; color: white !important; }
+    .nav-cta:hover { background: var(--teal-d); transform: translateY(-1px); }
 
-    /* ─── HERO ─── */
+    /* ────────────────────────────────────────────
+       HERO
+    ──────────────────────────────────────────── */
     .hero {
-      padding: 140px 24px 100px;
+      padding: 80px 24px 60px;
       text-align: center;
-      max-width: 800px;
-      margin: 0 auto;
+      max-width: 780px; margin: 0 auto;
     }
     .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: #EFF6FF;
-      border: 1px solid #BFDBFE;
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--teal-l);
+      border: 1px solid rgba(0,196,180,0.25);
       border-radius: 100px;
       padding: 6px 16px;
-      font-size: 13px; font-weight: 600;
-      color: var(--blue);
+      font-size: 13px; font-weight: 600; color: var(--teal-d);
       margin-bottom: 28px;
     }
     .hero h1 {
-      font-size: clamp(36px, 6vw, 64px);
+      font-size: clamp(38px, 7vw, 68px);
       font-weight: 900;
-      line-height: 1.1;
-      letter-spacing: -2px;
+      line-height: 1.08;
+      letter-spacing: -2.5px;
       color: var(--text);
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
-    .hero h1 span { color: var(--blue); }
+    .hero h1 .accent { color: var(--teal); }
     .hero-sub {
-      font-size: clamp(17px, 2.5vw, 20px);
+      font-size: clamp(16px, 2.5vw, 19px);
       color: var(--muted);
-      max-width: 580px;
-      margin: 0 auto 40px;
-      line-height: 1.7;
+      max-width: 560px; margin: 0 auto 36px;
+      line-height: 1.75;
       font-weight: 400;
     }
 
-    /* ─── WAITLIST FORM ─── */
-    .waitlist-form {
-      display: flex; gap: 12px;
-      max-width: 460px; margin: 0 auto 16px;
+    /* Waitlist form */
+    .hero-form {
+      display: flex; gap: 10px;
+      max-width: 460px; margin: 0 auto 14px;
       flex-wrap: wrap; justify-content: center;
     }
-    .waitlist-input {
-      flex: 1; min-width: 220px;
+    .hero-input {
+      flex: 1; min-width: 210px;
       padding: 14px 18px;
       border: 1.5px solid var(--border);
-      border-radius: 10px;
-      font-size: 15px;
-      font-family: inherit;
+      border-radius: 12px;
+      font-size: 15px; font-family: inherit;
       outline: none;
-      transition: border-color 0.2s;
       background: white;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .waitlist-input:focus { border-color: var(--blue); }
-    .waitlist-input::placeholder { color: #9CA3AF; }
-    .btn-waitlist {
+    .hero-input:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(0,196,180,0.15);
+    }
+    .hero-input::placeholder { color: #9CA3AF; }
+    .btn-hero {
       padding: 14px 28px;
-      background: var(--blue);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: 700;
-      font-family: inherit;
+      background: var(--teal);
+      color: white; border: none;
+      border-radius: 12px;
+      font-size: 15px; font-weight: 700; font-family: inherit;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
       white-space: nowrap;
     }
-    .btn-waitlist:hover { background: var(--blue-dark); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(37,99,235,0.3); }
-    .hero-micro { font-size: 13px; color: #9CA3AF; margin-bottom: 56px; }
-    .hero-micro span { color: var(--green); font-weight: 600; }
-
-    /* ─── TRUST BAR ─── */
-    .trust-bar {
-      display: flex; justify-content: center; align-items: center; gap: 32px;
-      flex-wrap: wrap;
-      padding: 0 24px 100px;
-      max-width: 700px; margin: 0 auto;
+    .btn-hero:hover {
+      background: var(--teal-d);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(0,196,180,0.35);
     }
-    .trust-item { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--muted); font-weight: 500; }
-    .trust-icon { font-size: 16px; }
-    .trust-divider { width: 1px; height: 20px; background: var(--border); }
-
-    /* ─── APP PREVIEW ─── */
-    .app-preview {
-      max-width: 1100px; margin: 0 auto;
-      padding: 0 24px 100px;
-      display: flex; justify-content: center;
+    .hero-micro {
+      font-size: 13px; color: #9CA3AF;
+      margin-bottom: 0;
     }
-    .phone-mockup {
-      width: 280px;
-      background: var(--dark);
-      border-radius: 40px;
-      padding: 16px;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.1);
+
+    /* ────────────────────────────────────────────
+       PHONE MOCKUP STRIP
+    ──────────────────────────────────────────── */
+    .mockup-section {
+      padding: 56px 24px 72px;
+      display: flex; justify-content: center; align-items: flex-end; gap: 20px;
+      background: linear-gradient(180deg, var(--white) 0%, var(--bg) 100%);
+      overflow: hidden;
+    }
+
+    /* Phone shell */
+    .phone {
+      background: #1A1A1E;
+      border-radius: 44px;
+      padding: 14px 14px;
+      box-shadow:
+        0 32px 64px rgba(0,0,0,0.18),
+        0 0 0 1px rgba(255,255,255,0.08),
+        inset 0 0 0 1px rgba(255,255,255,0.04);
       position: relative;
+    }
+    .phone.main { transform: scale(1); z-index: 2; }
+    .phone.side {
+      transform: scale(0.82) translateY(32px);
+      opacity: 0.55;
+      z-index: 1;
     }
     .phone-screen {
       background: white;
-      border-radius: 28px;
+      border-radius: 32px;
       overflow: hidden;
-      aspect-ratio: 9/19;
+      width: 260px;
+      height: 520px;
       display: flex; flex-direction: column;
-    }
-    .phone-statusbar {
-      background: #F9FAFB;
-      padding: 12px 16px 8px;
-      display: flex; justify-content: space-between;
-      font-size: 12px; font-weight: 600; color: var(--text);
-    }
-    .phone-appbar {
-      background: white;
-      padding: 8px 16px 12px;
-      border-bottom: 1px solid var(--border);
-    }
-    .phone-appbar-title { font-size: 18px; font-weight: 800; color: var(--text); }
-    .phone-appbar-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
-    .phone-content { flex: 1; background: #F9FAFB; padding: 12px; display: flex; flex-direction: column; gap: 8px; overflow: hidden; }
-    .phone-card {
-      background: white;
-      border-radius: 12px;
-      padding: 12px;
-      border: 1px solid var(--border);
-    }
-    .phone-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-    .phone-card-title { font-size: 13px; font-weight: 700; color: var(--text); }
-    .phone-card-badge { font-size: 10px; font-weight: 600; color: var(--blue); background: #EFF6FF; padding: 2px 8px; border-radius: 100px; }
-    .phone-timeline { display: flex; flex-direction: column; gap: 6px; }
-    .phone-timeline-item { display: flex; gap: 8px; align-items: flex-start; }
-    .phone-tl-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); flex-shrink: 0; margin-top: 4px; }
-    .phone-tl-text { font-size: 11px; color: var(--muted); line-height: 1.4; }
-    .phone-tl-date { font-size: 10px; color: #D1D5DB; margin-top: 1px; }
-    .phone-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-    .phone-photo {
-      aspect-ratio: 1;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #DBEAFE, #EFF6FF);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px;
-    }
-    .phone-stat { display: flex; gap: 8px; }
-    .phone-stat-item { flex: 1; background: #F9FAFB; border-radius: 8px; padding: 8px; text-align: center; }
-    .phone-stat-num { font-size: 16px; font-weight: 800; color: var(--blue); }
-    .phone-stat-label { font-size: 10px; color: var(--muted); margin-top: 1px; }
-
-    /* ─── SECTION BASE ─── */
-    .section { padding: 100px 24px; }
-    .section-inner { max-width: 1100px; margin: 0 auto; }
-    .section-center { text-align: center; }
-    .eyebrow {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 12px; font-weight: 700;
-      letter-spacing: 1.5px; text-transform: uppercase;
-      color: var(--blue);
-      margin-bottom: 16px;
-    }
-    h2 {
-      font-size: clamp(28px, 4vw, 44px);
-      font-weight: 800;
-      letter-spacing: -1px;
-      line-height: 1.2;
-      color: var(--text);
-      margin-bottom: 16px;
-    }
-    .section-desc { font-size: 18px; color: var(--muted); max-width: 560px; margin: 0 auto; line-height: 1.7; }
-
-    /* ─── PAIN ─── */
-    .pain-section { background: var(--dark); padding: 100px 24px; }
-    .pain-section h2 { color: white; }
-    .pain-section .eyebrow { color: #60A5FA; }
-    .pain-section .section-desc { color: #9CA3AF; }
-    .pain-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1px; background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 16px; overflow: hidden;
-      margin-top: 60px;
-    }
-    .pain-item {
-      background: var(--dark);
-      padding: 36px 32px;
-      transition: background 0.2s;
-    }
-    .pain-item:hover { background: #151C2F; }
-    .pain-emoji { font-size: 28px; margin-bottom: 16px; }
-    .pain-item h3 { font-size: 17px; font-weight: 700; color: white; margin-bottom: 10px; }
-    .pain-item p { font-size: 15px; color: #9CA3AF; line-height: 1.6; }
-    .pain-bridge {
-      text-align: center; margin-top: 48px;
-      font-size: 20px; color: white;
-      font-weight: 600; letter-spacing: -0.3px;
-    }
-    .pain-bridge span { color: #60A5FA; }
-
-    /* ─── HOW IT WORKS ─── */
-    .hiw-section { background: white; padding: 100px 24px; }
-    .steps { display: flex; gap: 0; margin-top: 64px; position: relative; }
-    .steps::before {
-      content: '';
-      position: absolute; top: 28px; left: calc(16.66% + 20px); right: calc(16.66% + 20px);
-      height: 1px; background: var(--border);
-    }
-    .step { flex: 1; text-align: center; padding: 0 20px; }
-    .step-num {
-      width: 56px; height: 56px;
-      border-radius: 50%;
-      background: var(--blue);
-      color: white;
-      font-size: 20px; font-weight: 800;
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 20px;
-      position: relative; z-index: 1;
-    }
-    .step h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
-    .step p { font-size: 14px; color: var(--muted); line-height: 1.6; }
-    .step-time { font-size: 12px; color: var(--blue); font-weight: 600; margin-top: 8px; }
-
-    /* ─── FEATURES ─── */
-    .features-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px; margin-top: 64px;
-    }
-    .feature-card {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 32px;
-      transition: all 0.2s;
-    }
-    .feature-card:hover { border-color: #BFDBFE; box-shadow: 0 4px 20px rgba(37,99,235,0.08); transform: translateY(-2px); }
-    .feature-icon {
-      width: 48px; height: 48px;
-      background: #EFF6FF;
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px; margin-bottom: 20px;
-    }
-    .feature-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
-    .feature-card p { font-size: 15px; color: var(--muted); line-height: 1.6; }
-    .feature-benefit {
-      margin-top: 12px;
-      font-size: 13px; font-weight: 600; color: var(--blue);
-    }
-
-    /* ─── SOCIAL PROOF ─── */
-    .proof-section { background: var(--light); padding: 100px 24px; }
-    .stats-row {
-      display: flex; gap: 0; margin-bottom: 64px;
-      background: white; border: 1px solid var(--border);
-      border-radius: 16px; overflow: hidden;
-      flex-wrap: wrap;
-    }
-    .stat-block {
-      flex: 1; min-width: 150px;
-      padding: 36px 24px; text-align: center;
-      border-right: 1px solid var(--border);
-    }
-    .stat-block:last-child { border-right: none; }
-    .stat-num { font-size: 36px; font-weight: 900; color: var(--blue); letter-spacing: -1px; }
-    .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; font-weight: 500; }
-    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-    .review-card {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 28px;
-    }
-    .stars { color: #F59E0B; font-size: 14px; margin-bottom: 16px; }
-    .review-text { font-size: 15px; color: var(--text); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
-    .reviewer { display: flex; align-items: center; gap: 12px; }
-    .reviewer-avatar {
-      width: 40px; height: 40px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--blue), var(--cyan));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 16px; font-weight: 700; color: white;
-    }
-    .reviewer-name { font-size: 14px; font-weight: 700; }
-    .reviewer-meta { font-size: 12px; color: var(--muted); }
-
-    /* ─── FOR WHOM ─── */
-    .whom-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 64px; }
-    .whom-card {
-      background: white;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 32px;
-      position: relative; overflow: hidden;
-    }
-    .whom-card::after {
-      content: '';
-      position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, var(--blue), var(--cyan));
-    }
-    .whom-icon { font-size: 36px; margin-bottom: 16px; }
-    .whom-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
-    .whom-card p { font-size: 15px; color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
-    .whom-quote { font-size: 13px; color: var(--blue); font-style: italic; font-weight: 500; border-left: 2px solid #BFDBFE; padding-left: 12px; }
-
-    /* ─── PRICING ─── */
-    .pricing-section { background: white; padding: 100px 24px; }
-    .pricing-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px; margin-top: 64px; max-width: 960px; margin-left: auto; margin-right: auto;
-    }
-    .price-card {
-      border: 1.5px solid var(--border);
-      border-radius: 20px;
-      padding: 36px 28px;
       position: relative;
-      transition: transform 0.2s;
     }
-    .price-card:hover { transform: translateY(-4px); }
-    .price-card.featured { border-color: var(--blue); box-shadow: 0 0 0 4px rgba(37,99,235,0.08); }
-    .featured-badge {
-      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
-      background: var(--blue); color: white;
-      font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
-      padding: 4px 16px; border-radius: 100px;
-      white-space: nowrap;
-    }
-    .price-tier { font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
-    .price-amount { font-size: 48px; font-weight: 900; letter-spacing: -2px; color: var(--text); line-height: 1; }
-    .price-amount .cent { font-size: 24px; vertical-align: super; font-weight: 600; }
-    .price-period { font-size: 14px; color: var(--muted); margin: 4px 0 20px; }
-    .price-divider { height: 1px; background: var(--border); margin: 20px 0; }
-    .price-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
-    .price-list li { display: flex; gap: 10px; font-size: 14px; color: var(--text); align-items: flex-start; }
-    .check { color: var(--green); font-size: 14px; flex-shrink: 0; margin-top: 1px; }
-    .cross { color: #D1D5DB; font-size: 14px; flex-shrink: 0; margin-top: 1px; }
-    .btn-plan {
-      display: block; width: 100%; text-align: center;
-      padding: 14px;
-      border-radius: 10px;
-      font-size: 15px; font-weight: 700;
-      text-decoration: none;
-      transition: all 0.2s;
-      font-family: inherit; cursor: pointer; border: none;
-    }
-    .btn-plan.outline { background: white; color: var(--blue); border: 1.5px solid var(--blue); }
-    .btn-plan.outline:hover { background: #EFF6FF; }
-    .btn-plan.solid { background: var(--blue); color: white; }
-    .btn-plan.solid:hover { background: var(--blue-dark); }
-    .price-note { text-align: center; margin-top: 24px; font-size: 13px; color: var(--muted); }
-
-    /* ─── PRIVACY ─── */
-    .privacy-section { background: var(--dark2); padding: 80px 24px; }
-    .privacy-inner { max-width: 900px; margin: 0 auto; text-align: center; }
-    .privacy-inner h2 { color: white; }
-    .privacy-inner .eyebrow { color: #60A5FA; }
-    .privacy-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; margin-top: 48px; }
-    .privacy-item {
-      display: flex; align-items: center; gap: 10px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 10px;
-      padding: 14px 20px;
-      font-size: 14px; color: #E5E7EB; font-weight: 500;
-    }
-    .privacy-item-icon { color: var(--green); font-size: 16px; }
-
-    /* ─── B2B ─── */
-    .b2b-section { background: var(--light); padding: 80px 24px; }
-    .b2b-inner {
-      max-width: 900px; margin: 0 auto;
+    /* Status bar */
+    .ps-bar {
       background: white;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 48px;
-      display: flex; gap: 48px; align-items: center;
-      flex-wrap: wrap;
+      padding: 14px 20px 8px;
+      display: flex; justify-content: space-between;
+      font-size: 12px; font-weight: 600; color: #111;
     }
-    .b2b-text { flex: 1; min-width: 250px; }
-    .b2b-text .eyebrow { display: block; margin-bottom: 12px; }
-    .b2b-text h2 { font-size: 28px; margin-bottom: 16px; }
-    .b2b-text p { color: var(--muted); font-size: 16px; line-height: 1.7; margin-bottom: 24px; }
-    .b2b-stats { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 28px; }
-    .b2b-stat .num { font-size: 28px; font-weight: 900; color: var(--blue); letter-spacing: -1px; }
-    .b2b-stat .label { font-size: 12px; color: var(--muted); }
-    .btn-b2b {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--dark);
-      color: white;
-      padding: 14px 24px;
-      border-radius: 10px;
-      font-size: 15px; font-weight: 700;
-      text-decoration: none;
-      transition: background 0.2s;
+    /* App header */
+    .ps-header {
+      padding: 4px 20px 14px;
+      border-bottom: 1px solid #F0F0F0;
     }
-    .btn-b2b:hover { background: #1F2937; }
-
-    /* ─── FAQ ─── */
-    .faq-section { padding: 100px 24px; }
-    .faq-list { max-width: 720px; margin: 64px auto 0; display: flex; flex-direction: column; gap: 12px; }
-    details {
-      background: white;
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
+    .ps-title { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: #111; }
+    .ps-sub { font-size: 12px; color: var(--muted); margin-top: 1px; }
+    /* Content */
+    .ps-body {
+      flex: 1; background: #F7F8FA;
+      padding: 14px; display: flex; flex-direction: column; gap: 10px;
       overflow: hidden;
-      transition: border-color 0.2s;
     }
-    details[open] { border-color: #BFDBFE; }
-    summary {
-      padding: 20px 24px;
-      font-size: 16px; font-weight: 600;
-      cursor: pointer;
+    .ps-card {
+      background: white;
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .ps-card-row {
       display: flex; justify-content: space-between; align-items: center;
-      list-style: none; color: var(--text);
-      user-select: none;
+      margin-bottom: 10px;
     }
-    summary::-webkit-details-marker { display: none; }
-    summary::after { content: '+'; color: var(--blue); font-size: 20px; font-weight: 400; }
-    details[open] summary::after { content: '−'; }
-    .faq-body { padding: 0 24px 20px; color: var(--muted); font-size: 15px; line-height: 1.7; }
+    .ps-card-label { font-size: 13px; font-weight: 700; color: #111; }
+    .ps-card-badge {
+      font-size: 11px; font-weight: 600;
+      background: var(--teal-l); color: var(--teal-d);
+      padding: 2px 9px; border-radius: 100px;
+    }
 
-    /* ─── FINAL CTA ─── */
-    .final-section {
-      background: var(--blue);
-      padding: 100px 24px;
+    /* Tooth map */
+    .tooth-map {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+    }
+    .tooth-row {
+      display: flex; gap: 3px;
+    }
+    .tooth {
+      width: 14px; height: 16px;
+      border-radius: 4px 4px 5px 5px;
+      background: #E8F8F7;
+      border: 1.5px solid var(--teal);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 6px;
+    }
+    .tooth.done { background: var(--teal); border-color: var(--teal-d); }
+    .tooth.warn { background: #FEF3C7; border-color: #F59E0B; }
+    .tooth.ok   { background: #D1FAE5; border-color: #10B981; }
+
+    /* Timeline */
+    .ps-timeline { display: flex; flex-direction: column; gap: 8px; }
+    .ps-tl-item { display: flex; gap: 10px; align-items: flex-start; }
+    .ps-tl-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      flex-shrink: 0; margin-top: 3px;
+    }
+    .ps-tl-text { font-size: 11px; color: #374151; line-height: 1.4; }
+    .ps-tl-meta { font-size: 10px; color: #9CA3AF; margin-top: 1px; }
+
+    /* Stats row */
+    .ps-stats { display: flex; gap: 8px; }
+    .ps-stat {
+      flex: 1; background: var(--teal-l);
+      border-radius: 10px; padding: 8px;
       text-align: center;
     }
-    .final-section h2 { color: white; font-size: clamp(32px, 5vw, 52px); }
-    .final-section p { color: rgba(255,255,255,0.75); font-size: 18px; max-width: 480px; margin: 16px auto 40px; line-height: 1.7; }
-    .final-form {
-      display: flex; gap: 12px; max-width: 440px; margin: 0 auto 16px;
-      flex-wrap: wrap; justify-content: center;
+    .ps-stat-n { font-size: 17px; font-weight: 800; color: var(--teal-d); }
+    .ps-stat-l { font-size: 9px; color: var(--muted); margin-top: 1px; line-height: 1.3; }
+
+    /* Reminder card */
+    .ps-reminder {
+      display: flex; align-items: center; gap: 10px;
+      background: white; border-radius: 14px;
+      padding: 12px 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
     }
-    .final-input {
+    .ps-reminder-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--teal); display: flex; align-items: center;
+      justify-content: center; font-size: 18px; flex-shrink: 0;
+    }
+    .ps-reminder-text { font-size: 12px; font-weight: 600; color: #111; }
+    .ps-reminder-sub { font-size: 10px; color: var(--muted); margin-top: 1px; }
+
+    /* Phone 2 - history screen */
+    .ps2-header {
+      background: var(--teal);
+      padding: 14px 20px 18px;
+    }
+    .ps2-htitle { font-size: 19px; font-weight: 800; color: white; letter-spacing: -0.3px; }
+    .ps2-hsub { font-size: 11px; color: rgba(255,255,255,0.75); margin-top: 2px; }
+
+    /* ────────────────────────────────────────────
+       FEATURES  (3 cards)
+    ──────────────────────────────────────────── */
+    .features-section {
+      padding: 72px 24px 80px;
+      background: var(--bg);
+    }
+    .section-label {
+      text-align: center;
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 14px;
+    }
+    .section-title {
+      text-align: center;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 800;
+      letter-spacing: -1.2px;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 48px;
+    }
+    .features-grid {
+      max-width: 1000px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .feat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    }
+    .feat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(0,196,180,0.1);
+      border-color: rgba(0,196,180,0.3);
+    }
+    .feat-icon {
+      width: 52px; height: 52px;
+      background: var(--teal-l);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; margin-bottom: 20px;
+    }
+    .feat-card h3 {
+      font-size: 18px; font-weight: 700;
+      color: var(--text); margin-bottom: 10px;
+      letter-spacing: -0.3px;
+    }
+    .feat-card p {
+      font-size: 15px; color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ────────────────────────────────────────────
+       WAITLIST SECTION
+    ──────────────────────────────────────────── */
+    .waitlist-section {
+      padding: 80px 24px;
+      background: var(--white);
+    }
+    .waitlist-box {
+      max-width: 600px; margin: 0 auto;
+      background: var(--teal);
+      border-radius: 24px;
+      padding: 56px 48px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    /* Decorative circles */
+    .waitlist-box::before {
+      content: '';
+      position: absolute; top: -60px; right: -60px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+    }
+    .waitlist-box::after {
+      content: '';
+      position: absolute; bottom: -80px; left: -40px;
+      width: 240px; height: 240px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+    }
+    .waitlist-box h2 {
+      font-size: clamp(26px, 4vw, 36px);
+      font-weight: 800; color: white;
+      letter-spacing: -1px; line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .waitlist-box p {
+      font-size: 16px; color: rgba(255,255,255,0.8);
+      margin-bottom: 32px; line-height: 1.6;
+    }
+    .wl-form {
+      display: flex; gap: 10px;
+      flex-wrap: wrap; justify-content: center;
+      position: relative; z-index: 1;
+    }
+    .wl-input {
       flex: 1; min-width: 200px;
       padding: 14px 18px;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       font-size: 15px; font-family: inherit;
       outline: none;
+      background: rgba(255,255,255,0.95);
+      color: var(--text);
     }
-    .btn-final {
-      padding: 14px 28px;
-      background: var(--dark);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 15px; font-weight: 700;
-      font-family: inherit; cursor: pointer;
-      transition: background 0.2s;
+    .wl-input::placeholder { color: #9CA3AF; }
+    .wl-input:focus { background: white; }
+    .btn-wl {
+      padding: 14px 24px;
+      background: var(--text);
+      color: white; border: none;
+      border-radius: 12px;
+      font-size: 15px; font-weight: 700; font-family: inherit;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
       white-space: nowrap;
     }
-    .btn-final:hover { background: black; }
-    .final-micro { font-size: 13px; color: rgba(255,255,255,0.6); }
+    .btn-wl:hover { background: #1F2937; transform: translateY(-1px); }
+    .wl-micro {
+      font-size: 12px; color: rgba(255,255,255,0.6);
+      margin-top: 14px;
+      position: relative; z-index: 1;
+    }
 
-    /* ─── FOOTER ─── */
+    /* ────────────────────────────────────────────
+       FOOTER
+    ──────────────────────────────────────────── */
     footer {
-      background: var(--dark);
-      padding: 48px 24px;
+      background: var(--text);
+      padding: 40px 24px;
       text-align: center;
     }
-    .footer-inner { max-width: 1100px; margin: 0 auto; }
-    .footer-logo { font-size: 20px; font-weight: 800; color: white; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-    .footer-links { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-bottom: 24px; }
-    .footer-links a { color: #9CA3AF; text-decoration: none; font-size: 14px; transition: color 0.2s; }
+    .footer-logo {
+      display: flex; align-items: center; justify-content: center; gap: 9px;
+      font-size: 17px; font-weight: 700; color: white;
+      margin-bottom: 16px;
+    }
+    .footer-logo-icon {
+      width: 30px; height: 30px;
+      background: var(--teal);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px;
+    }
+    .footer-links {
+      display: flex; justify-content: center; gap: 24px;
+      flex-wrap: wrap; margin-bottom: 20px;
+    }
+    .footer-links a {
+      color: #6B7280; text-decoration: none;
+      font-size: 13px; transition: color 0.2s;
+    }
     .footer-links a:hover { color: white; }
-    .footer-copy { font-size: 13px; color: #6B7280; }
+    .footer-copy { font-size: 12px; color: #4B5563; }
 
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .steps { flex-direction: column; }
-      .steps::before { display: none; }
-      .step { padding: 0; display: flex; gap: 16px; text-align: left; align-items: flex-start; }
-      .step-num { margin: 0; flex-shrink: 0; }
-      .b2b-inner { flex-direction: column; padding: 32px; }
-      .stats-row { flex-direction: column; }
-      .stat-block { border-right: none; border-bottom: 1px solid var(--border); }
-      .stat-block:last-child { border-bottom: none; }
+    /* ────────────────────────────────────────────
+       SUCCESS TOAST
+    ──────────────────────────────────────────── */
+    .toast {
+      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: #0D1117; color: white;
+      padding: 14px 24px; border-radius: 14px;
+      font-size: 14px; font-weight: 600;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      display: flex; align-items: center; gap: 10px;
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
+      opacity: 0; z-index: 999; white-space: nowrap;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    .toast-icon { font-size: 18px; }
+
+    /* ────────────────────────────────────────────
+       RESPONSIVE
+    ──────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .phone.side { display: none; }
+      .waitlist-box { padding: 40px 24px; }
+      .wl-form { flex-direction: column; }
+      .wl-input, .btn-wl { width: 100%; }
+      .hero-form { flex-direction: column; }
+      .hero-input, .btn-hero { width: 100%; }
     }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- ═══ NAV ═══ -->
 <nav>
   <div class="nav-inner">
     <a href="/" class="nav-logo">
       <div class="nav-logo-icon">🦷</div>
       <span class="nav-logo-text">Dental Passport</span>
     </a>
-    <div class="nav-links">
-      <a href="#features">Features</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#faq">FAQ</a>
-      <a href="#waitlist" class="nav-cta">Join Waitlist →</a>
-    </div>
+    <a href="#waitlist" class="nav-cta">Приєднатись →</a>
   </div>
 </nav>
 
-<!-- HERO -->
-<div style="background: white;">
-  <section class="hero">
-    <div class="hero-badge">🚀 Coming Soon to iOS</div>
-    <h1>Your Dental History.<br><span>Always With You.</span></h1>
-    <p class="hero-sub">
-      One missing X-ray can cost you $800 in repeated scans.
-      Dental Passport stores everything — photos, records, X-rays — so you never start from scratch again.
-    </p>
-    <form class="waitlist-form" id="waitlist" onsubmit="handleSubmit(event)">
-      <input type="email" class="waitlist-input" placeholder="Enter your email" required />
-      <button type="submit" class="btn-waitlist">Join Waitlist →</button>
-    </form>
-    <p class="hero-micro"><span>✓ Free</span> to join · No spam · Be first to know at launch</p>
-  </section>
 
-  <!-- TRUST BAR -->
-  <div class="trust-bar">
-    <div class="trust-item"><span class="trust-icon">🔒</span> Private & encrypted</div>
-    <div class="trust-divider"></div>
-    <div class="trust-item"><span class="trust-icon">☁️</span> Google Sync</div>
-    <div class="trust-divider"></div>
-    <div class="trust-item"><span class="trust-icon">📱</span> iOS App</div>
-    <div class="trust-divider"></div>
-    <div class="trust-item"><span class="trust-icon">🌍</span> Works anywhere</div>
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-badge">🚀 Незабаром в App Store</div>
+
+  <h1>Твоя стоматологічна<br>історія <span class="accent">завжди з тобою</span></h1>
+
+  <p class="hero-sub">
+    Зубна карта, всі процедури та нагадування про візити —
+    в одному додатку. Більше жодного «розкажіть, що лікували».
+  </p>
+
+  <form class="hero-form" onsubmit="handleWaitlist(event)">
+    <input type="email" class="hero-input" placeholder="Твій email" required />
+    <button type="submit" class="btn-hero">Приєднатись до вейтлісту →</button>
+  </form>
+
+  <p class="hero-micro">🔒 Без спаму. Сповістимо першими при запуску.</p>
+</section>
+
+
+<!-- ═══ PHONE MOCKUP ═══ -->
+<div class="mockup-section">
+  <!-- Side phone: history -->
+  <div class="phone side" aria-hidden="true">
+    <div class="phone-screen" style="width:220px;height:440px;padding:0;overflow:hidden;border-radius:32px;">
+      <img src="screen-history.png" alt="Dental Passport — Історія" style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:32px;">
+    </div>
   </div>
 
-  <!-- APP PREVIEW -->
-  <div class="app-preview">
-    <div class="phone-mockup">
-      <div class="phone-screen">
-        <div class="phone-statusbar">
-          <span>9:41</span>
-          <span>●●●</span>
-        </div>
-        <div class="phone-appbar">
-          <div class="phone-appbar-title">My Passport 🦷</div>
-          <div class="phone-appbar-sub">Last visit: 3 weeks ago</div>
-        </div>
-        <div class="phone-content">
-          <div class="phone-card">
-            <div class="phone-card-header">
-              <span class="phone-card-title">Treatment History</span>
-              <span class="phone-card-badge">6 records</span>
-            </div>
-            <div class="phone-timeline">
-              <div class="phone-timeline-item">
-                <div class="phone-tl-dot" style="background:#10B981"></div>
-                <div>
-                  <div class="phone-tl-text">Crown — upper right molar</div>
-                  <div class="phone-tl-date">Jan 2025 · Dr. Kovalenko</div>
-                </div>
-              </div>
-              <div class="phone-timeline-item">
-                <div class="phone-tl-dot" style="background:#3B82F6"></div>
-                <div>
-                  <div class="phone-tl-text">Cleaning + 2 X-rays</div>
-                  <div class="phone-tl-date">Oct 2024 · SmilePro Clinic</div>
-                </div>
-              </div>
-              <div class="phone-timeline-item">
-                <div class="phone-tl-dot" style="background:#F59E0B"></div>
-                <div>
-                  <div class="phone-tl-text">Root canal — tooth #14</div>
-                  <div class="phone-tl-date">Mar 2024 · City Dental</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="phone-card">
-            <div class="phone-card-header">
-              <span class="phone-card-title">Photo Timeline</span>
-              <span class="phone-card-badge">12 photos</span>
-            </div>
-            <div class="phone-photos">
-              <div class="phone-photo">📸</div>
-              <div class="phone-photo">🔬</div>
-            </div>
-          </div>
-          <div class="phone-stat">
-            <div class="phone-stat-item">
-              <div class="phone-stat-num">6</div>
-              <div class="phone-stat-label">Visits logged</div>
-            </div>
-            <div class="phone-stat-item">
-              <div class="phone-stat-num">12</div>
-              <div class="phone-stat-label">Photos stored</div>
-            </div>
-            <div class="phone-stat-item">
-              <div class="phone-stat-num">4</div>
-              <div class="phone-stat-label">X-rays saved</div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <!-- MAIN phone: home/tooth map -->
+  <div class="phone main" aria-label="Dental Passport — головний екран">
+    <div class="phone-screen" style="padding:0;overflow:hidden;border-radius:32px;">
+      <img src="screen-home.png" alt="Dental Passport — Зубна карта" style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:32px;">
+    </div>
+  </div>
+
+  <!-- Side phone: profile -->
+  <div class="phone side" aria-hidden="true">
+    <div class="phone-screen" style="width:220px;height:440px;padding:0;overflow:hidden;border-radius:32px;">
+      <img src="screen-profile.png" alt="Dental Passport — Профіль" style="width:100%;height:100%;object-fit:cover;object-position:top;border-radius:32px;">
     </div>
   </div>
 </div>
 
-<!-- PAIN -->
-<section class="pain-section">
-  <div class="section-inner section-center">
-    <div class="eyebrow">Sound familiar?</div>
-    <h2>The dental chaos<br>we all live in</h2>
-    <p class="section-desc" style="color:#9CA3AF">You're not alone. These happen to millions of patients every year.</p>
-    <div class="pain-grid">
-      <div class="pain-item">
-        <div class="pain-emoji">😤</div>
-        <h3>"Sorry, we don't have your old X-rays."</h3>
-        <p>You switched dentists and spent $200 on scans you've already done. That money? Gone. That radiation? Also gone — into your body. Again.</p>
-      </div>
-      <div class="pain-item">
-        <div class="pain-emoji">✈️</div>
-        <h3>Dental emergency abroad. Zero records.</h3>
-        <p>You're in a foreign clinic with no shared language and no history. The dentist guesses. You hope for the best. That's not healthcare — that's gambling.</p>
-      </div>
-      <div class="pain-item">
-        <div class="pain-emoji">🏥</div>
-        <h3>Your clinic closed. Records "in storage."</h3>
-        <p>Three years of treatments, implant specs, root canal history — in a filing cabinet of a practice that no longer exists. Gone.</p>
-      </div>
-      <div class="pain-item">
-        <div class="pain-emoji">👶</div>
-        <h3>New pediatric dentist asks for your kid's history.</h3>
-        <p>First appointment, new school — and you're sitting there guessing which teeth came in when, what sealants were applied, what allergies were flagged.</p>
-      </div>
+
+<!-- ═══ FEATURES ═══ -->
+<section class="features-section">
+  <p class="section-label">Ключові функції</p>
+  <h2 class="section-title">Все що потрібно<br>про твої зуби</h2>
+
+  <div class="features-grid">
+
+    <div class="feat-card">
+      <div class="feat-icon">🗺️</div>
+      <h3>Інтерактивна зубна карта</h3>
+      <p>Торкнись будь-якого зуба й миттєво побач його стан, всі процедури та нотатки лікаря. 32 зуби, вся щелепа — на одному екрані.</p>
     </div>
-    <p class="pain-bridge">There's a better way. <span>Your dental history deserves a home.</span></p>
+
+    <div class="feat-card">
+      <div class="feat-icon">📋</div>
+      <h3>Повна історія процедур</h3>
+      <p>Хронологія всіх лікувань із вартістю, датами та лікарями. Більше не потрібно згадувати, що і коли тебе лікували.</p>
+    </div>
+
+    <div class="feat-card">
+      <div class="feat-icon">🔔</div>
+      <h3>Розумні нагадування</h3>
+      <p>Нагадування про плановий огляд, прийом ліків після процедури або контрольний візит — ніколи не пропусти важливе.</p>
+    </div>
+
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section class="hiw-section" id="features">
-  <div class="section-inner section-center">
-    <div class="eyebrow">How it works</div>
-    <h2>Up and running in 3 minutes</h2>
-    <p class="section-desc">No setup complexity. No clinic account needed. Just you and your records.</p>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div>
-          <h3>Sign in with Google</h3>
-          <p>One tap to create your account. No forms, no passwords, no clinic enrollment.</p>
-          <p class="step-time">⚡ 30 seconds</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div>
-          <h3>Add your records</h3>
-          <p>Upload photos, X-rays, treatment notes. Take a photo of a paper document — we handle the rest.</p>
-          <p class="step-time">📸 As you go</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div>
-          <h3>Access anywhere</h3>
-          <p>Walk into any clinic in the world and share your complete history in 30 seconds. Always synced, always ready.</p>
-          <p class="step-time">🌍 Any clinic, any country</p>
-        </div>
-      </div>
-    </div>
+
+<!-- ═══ WAITLIST ═══ -->
+<section class="waitlist-section" id="waitlist">
+  <div class="waitlist-box">
+    <h2>Будь першим</h2>
+    <p>Вейтліст відкритий. Залиш email — сповістимо одразу при запуску і дамо ранній доступ.</p>
+
+    <form class="wl-form" onsubmit="handleWaitlist(event)">
+      <input type="email" class="wl-input" placeholder="твій@email.com" required />
+      <button type="submit" class="btn-wl">Приєднатись до вейтлісту</button>
+    </form>
+    <p class="wl-micro">🔒 Без спаму. Відписатись можна в будь-який момент.</p>
   </div>
 </section>
 
-<!-- FEATURES -->
-<section class="section" style="background:#FAFAFA;">
-  <div class="section-inner section-center">
-    <div class="eyebrow">Features</div>
-    <h2>Everything your dental<br>history needs</h2>
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">📸</div>
-        <h3>Photo Timeline</h3>
-        <p>Capture and compare your teeth over time. See your progress between visits with a visual before/after history.</p>
-        <p class="feature-benefit">→ Never repeat a scan you already have</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🦷</div>
-        <h3>Complete Treatment History</h3>
-        <p>Every procedure, every X-ray, every doctor's note — organized by date, tooth, and provider. Instantly searchable.</p>
-        <p class="feature-benefit">→ Walk in prepared. Every single time.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">☁️</div>
-        <h3>Google Sync — Always Backed Up</h3>
-        <p>Lose your phone. Break your phone. Get a new phone. Your data doesn't care — it's always there, always safe.</p>
-        <p class="feature-benefit">→ Zero data loss. Ever.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">👨‍👩‍👧</div>
-        <h3>Family Profiles</h3>
-        <p>Manage dental records for your entire family in one app. Track your kids' dental journey from first tooth to braces.</p>
-        <p class="feature-benefit">→ Be the parent who actually knows</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">📤</div>
-        <h3>Share with Your Dentist</h3>
-        <p>Generate a shareable PDF or link your dentist can view in seconds — without them needing the app.</p>
-        <p class="feature-benefit">→ 12 minutes saved per appointment</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">🔒</div>
-        <h3>Private by Design</h3>
-        <p>Your data is never sold, never shared with clinics, never used for advertising. You own it. You control it.</p>
-        <p class="feature-benefit">→ Your health. Your data. Full stop.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- SOCIAL PROOF -->
-<section class="proof-section">
-  <div class="section-inner section-center">
-    <div class="eyebrow">Early Adopters</div>
-    <h2>People who already<br>get it</h2>
-    <div class="stats-row">
-      <div class="stat-block">
-        <div class="stat-num">500+</div>
-        <div class="stat-label">Waitlist signups</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-num">4.9★</div>
-        <div class="stat-label">Beta rating</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-num">3 min</div>
-        <div class="stat-label">Avg. setup time</div>
-      </div>
-      <div class="stat-block">
-        <div class="stat-num">$0</div>
-        <div class="stat-label">Free to start</div>
-      </div>
-    </div>
-    <div class="reviews-grid">
-      <div class="review-card">
-        <div class="stars">★★★★★</div>
-        <p class="review-text">"I cracked a tooth in Barcelona and opened Dental Passport. The local clinic saw my X-rays and history in 5 minutes. Without this, I'd have been guessing. Genuinely could have saved me from a wrong treatment."</p>
-        <div class="reviewer">
-          <div class="reviewer-avatar">M</div>
-          <div>
-            <div class="reviewer-name">Marcus T.</div>
-            <div class="reviewer-meta">Freelancer · Berlin</div>
-          </div>
-        </div>
-      </div>
-      <div class="review-card">
-        <div class="stars">★★★★★</div>
-        <p class="review-text">"I've moved 3 times in 4 years. Every new dentist treated me like a stranger starting from scratch. With Dental Passport, I walked into my new clinic with a 6-year history. The dentist said 'this is incredible.'"</p>
-        <div class="reviewer">
-          <div class="reviewer-avatar">P</div>
-          <div>
-            <div class="reviewer-name">Priya N.</div>
-            <div class="reviewer-meta">Marketing Manager · London</div>
-          </div>
-        </div>
-      </div>
-      <div class="review-card">
-        <div class="stars">★★★★★</div>
-        <p class="review-text">"Three kids, three dentists, orthodontic referrals, allergic reactions to anesthesia — I was managing all this in my head. Now I just open the app. My pediatric dentist asked if she could recommend it to other parents."</p>
-        <div class="reviewer">
-          <div class="reviewer-avatar">S</div>
-          <div>
-            <div class="reviewer-name">Sarah M.</div>
-            <div class="reviewer-meta">Nurse & Mom of 3 · Toronto</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOR WHOM -->
-<section class="section" style="background:white;">
-  <div class="section-inner section-center">
-    <div class="eyebrow">Who it's for</div>
-    <h2>Made for real life situations</h2>
-    <div class="whom-grid">
-      <div class="whom-card">
-        <div class="whom-icon">✈️</div>
-        <h3>Frequent Travelers & Expats</h3>
-        <p>Your dental records travel with you — to any clinic, any country. Especially powerful post-relocation when records get left behind.</p>
-        <p class="whom-quote">"Moved from Ukraine to Germany. My dental history moved with me." — Dmytro S., Berlin</p>
-      </div>
-      <div class="whom-card">
-        <div class="whom-icon">👨‍👩‍👧</div>
-        <h3>Parents</h3>
-        <p>Track your children's dental journey from first tooth to braces. One app, every kid, complete picture.</p>
-        <p class="whom-quote">"Finally I can track my son's orthodontic journey properly." — Olena V., Lviv</p>
-      </div>
-      <div class="whom-card">
-        <div class="whom-icon">💡</div>
-        <h3>Proactive Adults</h3>
-        <p>Never explain your full dental history from scratch again. Own your health data the same way you own your finances.</p>
-        <p class="whom-quote">"I used to carry a folder of X-rays. Now I open the app." — Maria K., Kyiv</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section class="pricing-section" id="pricing">
-  <div class="section-center">
-    <div class="eyebrow">Pricing</div>
-    <h2>Start free. Upgrade when ready.</h2>
-    <p class="section-desc">No credit card. No commitment. Upgrade only if you want more.</p>
-  </div>
-  <div class="pricing-grid">
-    <div class="price-card">
-      <div class="price-tier">Starter</div>
-      <div class="price-amount">$0</div>
-      <p class="price-period">Free forever</p>
-      <div class="price-divider"></div>
-      <ul class="price-list">
-        <li><span class="check">✓</span> 1 personal profile</li>
-        <li><span class="check">✓</span> Up to 3 treatment records</li>
-        <li><span class="check">✓</span> Basic visit timeline</li>
-        <li><span class="cross">✗</span> <span style="color:#9CA3AF">Photo & X-ray storage</span></li>
-        <li><span class="cross">✗</span> <span style="color:#9CA3AF">Share with dentist</span></li>
-        <li><span class="cross">✗</span> <span style="color:#9CA3AF">Family profiles</span></li>
-      </ul>
-      <button class="btn-plan outline" onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'})">Join Waitlist Free</button>
-    </div>
-    <div class="price-card featured">
-      <div class="featured-badge">Most Popular</div>
-      <div class="price-tier">Individual</div>
-      <div class="price-amount"><span class="cent">$</span>4<span style="font-size:24px;font-weight:600">.99</span></div>
-      <p class="price-period">per month · or $34.99/year <strong style="color:var(--green)">save 42%</strong></p>
-      <div class="price-divider"></div>
-      <ul class="price-list">
-        <li><span class="check">✓</span> Unlimited treatment records</li>
-        <li><span class="check">✓</span> Photo & X-ray storage (2GB)</li>
-        <li><span class="check">✓</span> PDF export for your dentist</li>
-        <li><span class="check">✓</span> 1-click share with clinics</li>
-        <li><span class="check">✓</span> Google Sync — always backed up</li>
-        <li><span class="cross">✗</span> <span style="color:#9CA3AF">Family profiles</span></li>
-      </ul>
-      <button class="btn-plan solid" onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'})">Get Early Access →</button>
-    </div>
-    <div class="price-card">
-      <div class="price-tier">Family</div>
-      <div class="price-amount"><span class="cent">$</span>8<span style="font-size:24px;font-weight:600">.99</span></div>
-      <p class="price-period">per month · or $59.99/year</p>
-      <div class="price-divider"></div>
-      <ul class="price-list">
-        <li><span class="check">✓</span> Everything in Individual</li>
-        <li><span class="check">✓</span> Up to 6 family profiles</li>
-        <li><span class="check">✓</span> Shared parent dashboard</li>
-        <li><span class="check">✓</span> Kids' dental journey tracking</li>
-        <li><span class="check">✓</span> Unlimited storage</li>
-        <li><span class="check">✓</span> Priority support</li>
-      </ul>
-      <button class="btn-plan outline" onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'})">Get Early Access →</button>
-    </div>
-  </div>
-  <p class="price-note">💡 One duplicate X-ray costs $150–300. One year of Dental Passport = $34.99. The math is easy.</p>
-</section>
-
-<!-- PRIVACY -->
-<section class="privacy-section">
-  <div class="privacy-inner">
-    <div class="eyebrow">Privacy & Security</div>
-    <h2>Your health data belongs to you.</h2>
-    <div class="privacy-grid">
-      <div class="privacy-item"><span class="privacy-item-icon">✓</span> Data never sold or shared</div>
-      <div class="privacy-item"><span class="privacy-item-icon">✓</span> Encrypted storage</div>
-      <div class="privacy-item"><span class="privacy-item-icon">✓</span> No clinic can access without your permission</div>
-      <div class="privacy-item"><span class="privacy-item-icon">✓</span> Delete your account & data anytime</div>
-      <div class="privacy-item"><span class="privacy-item-icon">✓</span> Works offline — records always available</div>
-      <div class="privacy-item"><span class="privacy-item-icon">✓</span> No advertising. Ever.</div>
-    </div>
-  </div>
-</section>
-
-<!-- B2B -->
-<section class="b2b-section">
-  <div class="b2b-inner">
-    <div class="b2b-text">
-      <span class="eyebrow">For Clinics & Dentists</span>
-      <h2>Your patients arrive prepared.</h2>
-      <p>When patients use Dental Passport, you spend less time gathering history and more time on actual care. One glance at their passport and you have everything you need.</p>
-      <div class="b2b-stats">
-        <div class="b2b-stat">
-          <div class="num">~12 min</div>
-          <div class="label">saved per new patient</div>
-        </div>
-        <div class="b2b-stat">
-          <div class="num">$149/mo</div>
-          <div class="label">Clinic Pro plan</div>
-        </div>
-      </div>
-      <a href="#" class="btn-b2b">Learn about Clinic Plan →</a>
-    </div>
-    <div style="font-size: 80px; flex-shrink: 0;">🏥</div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="faq-section" id="faq">
-  <div class="section-inner section-center">
-    <div class="eyebrow">FAQ</div>
-    <h2>Common questions</h2>
-    <div class="faq-list">
-      <details>
-        <summary>Is my health data actually safe?</summary>
-        <div class="faq-body">Your records are encrypted and stored privately. We don't sell your data, share it with insurers, or use it for advertising. Ever. You can delete your account and all data at any time. Your dental records are safer here than in a paper file at a clinic anyone can walk into.</div>
-      </details>
-      <details>
-        <summary>Can't I just use Google Drive or a folder?</summary>
-        <div class="faq-body">You can track finances in a spreadsheet too — kind of, sometimes, until it doesn't work. Dental Passport is purpose-built: organized by date, visit type, tooth, and doctor. It's not "files in a folder" — it's a complete, searchable health record in the format dentists actually need.</div>
-      </details>
-      <details>
-        <summary>Does my dentist need the app to see my records?</summary>
-        <div class="faq-body">No. You can generate a PDF or shareable link that any dentist can view without installing anything. You stay in control of who sees what.</div>
-      </details>
-      <details>
-        <summary>Is the free version actually useful?</summary>
-        <div class="faq-body">Yes — genuinely useful for one person managing basic records. Most people upgrade within 3 months not because we force them, but because they want unlimited storage and family profiles once they see how much it changes their dentist experience. No credit card needed to try.</div>
-      </details>
-      <details>
-        <summary>What if I switch to Android later?</summary>
-        <div class="faq-body">Your data is stored via Google — cross-platform by design. When Android support launches, your entire history migrates instantly. You won't lose a single record.</div>
-      </details>
-    </div>
-  </div>
-</section>
-
-<!-- FINAL CTA -->
-<section class="final-section">
-  <div class="eyebrow" style="color:rgba(255,255,255,0.7)">Join the waitlist</div>
-  <h2>Your next dental visit<br>starts today.</h2>
-  <p>Be first to access Dental Passport at launch. Early members get free premium access for 3 months.</p>
-  <form class="final-form" onsubmit="handleSubmit(event)">
-    <input type="email" class="final-input" placeholder="Your email address" required />
-    <button type="submit" class="btn-final">Reserve My Spot →</button>
-  </form>
-  <p class="final-micro">🔒 No spam. No credit card. Unsubscribe anytime.</p>
-</section>
-
-<!-- FOOTER -->
+<!-- ═══ FOOTER ═══ -->
 <footer>
-  <div class="footer-inner">
-    <div class="footer-logo">🦷 Dental Passport</div>
-    <div class="footer-links">
-      <a href="#">Features</a>
-      <a href="#">Pricing</a>
-      <a href="#">For Clinics</a>
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms</a>
-      <a href="mailto:hello@dentalpassport.app">Contact</a>
-    </div>
-    <p class="footer-copy">© 2025 Dental Passport. All rights reserved.</p>
+  <div class="footer-logo">
+    <div class="footer-logo-icon">🦷</div>
+    Dental Passport
   </div>
+  <div class="footer-links">
+    <a href="mailto:hello@dentalpassport.app">Зв'язок</a>
+    <a href="#">Конфіденційність</a>
+    <a href="#">Умови використання</a>
+  </div>
+  <p class="footer-copy">© 2025 Dental Passport. Зроблено з ❤️ в Україні</p>
 </footer>
 
+
+<!-- ═══ TOAST ═══ -->
+<div class="toast" id="toast">
+  <span class="toast-icon">✅</span>
+  Дякуємо! Ми повідомимо при запуску.
+</div>
+
+
 <script>
-  function handleSubmit(e) {
+  function handleWaitlist(e) {
     e.preventDefault();
-    const email = e.target.querySelector('input[type=email]').value;
-    // TODO: connect to email service (Mailchimp, ConvertKit, etc.)
-    alert('✅ You\'re on the list! We\'ll notify you at launch.\n\n' + email);
+    const input = e.target.querySelector('input[type=email]');
+    const email = input.value;
+
+    // Show toast
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
+
+    // Reset form
     e.target.reset();
+
+    // Optional: track in console
+    console.log('Waitlist signup:', email);
   }
 </script>
 
